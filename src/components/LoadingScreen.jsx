@@ -1,37 +1,39 @@
 import start_button from '../images/start_button.png';
-import progress_bar from '../images/progress_bar.png';
+import bg_image from '../images/loadingScreen_bg.png';
 import {useState, useEffect } from 'react';
 
 export default function LoadingScreen({ setCurrentScreen }) {
-    //progress bar
-    const [progress, setProgress] = useState(0);
+    const fullText = "Fashion Na.";
+    const [displayedText, setDisplayedText] = useState("");
+    const [showButton, setShowButton] = useState(false);
+
     useEffect(() => {
-        const timer = setInterval(() => {
-        setProgress((prevProgress) => {
-            if (prevProgress == 100) {
-            clearInterval(timer);
-            return 100;
+        let currentIndex = 0;
+
+        const interval = setInterval(() => {
+            if (currentIndex < fullText.length) {
+                setDisplayedText(fullText.slice(0, currentIndex + 1));
+                currentIndex++;
+            } else {
+                clearInterval(interval);
+                setTimeout(() => {
+                    setShowButton(true);
+                }, 100);
             }
+        }, 150);
 
-            return prevProgress + 1;
-        });
-        }, 30);
+        return () => clearInterval(interval);
 
-        return () => clearInterval(timer);
     }, []);
 
     return (
-        //loading screen
-        <div className="h-screen flex flex-col items-center justify-center bg-pink-100">   
-            <h1 className="absolute top-20 text-[180px] mb-32 text-purple-950" style = {{ fontFamily: 'Silkscreen, cursive' }}>Fashion Na</h1>
 
-            <div className="relative">
-                <img src={progress_bar} alt="Progress Bar" className="w-96 mb-4 drop-shadow-md" />
-                <div className="absolute top-0 left-0 pd-1 bg-pink-600 overflow-hidden transition-all duration-1000 rounded-full" style={{ width: `${progress}%` }}></div>
-            </div>
+        <div className="h-screen relative overflow-hidden bg-white flex flex-col items-center justify-center">
+            <div className="absolute inset-0 bg-cover bg-center opacity-50" style={{backgroundImage: `url(${bg_image})`}}></div>
+            <h1 className="absolute top-50 text-9xl mb-32 text-purple-950 drop-shadow-xl" style = {{fontFamily: 'Silkscreen, cursive'}}> {displayedText} </h1>
             
-            <button className="absolute bottom-60 transition-all duration-200 hover:-translate-y-2 active:scale-95">
-                <img src={start_button} alt="Start Game" className="w-60 drop-shadow-md hover:drop-shadow-xl transition-all duration-300" />
+            <button className="bottom-60 mt-16 transition-all duration-200 hover:scale-105 active:scale-95">
+                <img src={start_button} alt="Start Game" className={`w-80 drop-shadow-xl hover:drop-shadow-2xl transition-all duration-300 ${showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} />
             </button>
         </div>
     );
