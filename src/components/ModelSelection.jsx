@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 
 
 
-export default function ModelSelection({ setCurrentScreen }) {
+export default function ModelSelection({ setCurrentScreen, setSelectedModel }) {
     const fullText = "Select your model!";
     const [displayedText, setDisplayedText] = useState("");
     const [showUI, setShowUI] = useState(false);
@@ -43,7 +43,7 @@ export default function ModelSelection({ setCurrentScreen }) {
 
     return (
         <div className="h-screen flex flex-col items-center bg-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-cover bg-center opacity-50" style={{backgroundImage: `url(${bg_image})`}}></div>
+            <div className="absolute inset-0 bg-cover bg-center opacity-65" style={{backgroundImage: `url(${bg_image})`}}></div>
 
             <div className="relative z-10 flex flex-col items-center w-full max-w-7xl px-4">
                 
@@ -74,7 +74,7 @@ export default function ModelSelection({ setCurrentScreen }) {
 
                 </div>
 
-                <button onClick={() => setCurrentScreen('clothingSelection')} className={`mt-8 transition-all duration-500 
+                <button onClick={() => {setCurrentScreen('clothingSelection'); setSelectedModel(modelIndex);}} className={`mt-8 transition-all duration-500 
                     ${!showUI ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100 hover:scale-105 active:scale-95'}`}
                 >
                     <img src={confirm_button} alt="Confirm Selection" className="w-40 md:w-60 drop-shadow-lg hover:drop-shadow-2xl" />

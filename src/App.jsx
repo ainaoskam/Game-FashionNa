@@ -10,8 +10,8 @@ function App() {
   return (
     <>
       {currentScreen === 'loadingScreen' && <LoadingScreen setCurrentScreen={setCurrentScreen} />}
-      {currentScreen === 'modelSelection' && <ModelSelection setCurrentScreen={setCurrentScreen}/>}
-      {currentScreen === 'clothingSelection' && <ClothingSelection setCurrentScreen={setCurrentScreen} />}
+      {currentScreen === 'modelSelection' && <ModelSelection setCurrentScreen={setCurrentScreen} setSelectedModel={setSelectedModel} />}
+      {currentScreen === 'clothingSelection' && <ClothingSelection setCurrentScreen={setCurrentScreen} selectedModel={selectedModel} />}
     </>
   )
 }
